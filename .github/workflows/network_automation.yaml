@@ -23,10 +23,11 @@ jobs:
 
       - name: Run Ansible Playbook
         env:
-          DEVICE_USERNAME: ${{ secrets.DEVICE_USERNAME }}
-          DEVICE_PASSWORD: ${{ secrets.DEVICE_PASSWORD }}
           ANSIBLE_HOST_KEY_CHECKING: "False"
         run: ansible-playbook ansible/configure_devices.yaml -i ansible/hosts --extra-vars "ansible_ssh_pass=${{ secrets.DEVICE_PASSWORD }} ansible_user=${{ secrets.DEVICE_USERNAME }}"
 
       - name: Commit to the repo
-        run: git add ansible/backups;git commit -m 'Backing up every 10 minutes';git push origin main
+        run: |
+          git add ansible/backups
+          git commit -m 'Backing up every 10 minutes'
+          git push "https://{{ secrets.GH }}@github.com/balejin/network-automation-lab.git

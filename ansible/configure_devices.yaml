@@ -19,4 +19,4 @@
         backup: yes
         backup_options:
           filename: "running-config-{{ inventory_hostname }}"
-          dir_path: "backups"
+          dir_path: "ansible/backups"

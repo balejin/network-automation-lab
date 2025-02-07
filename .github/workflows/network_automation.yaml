@@ -25,6 +25,7 @@ jobs:
         env:
           DEVICE_USERNAME: ${{ secrets.DEVICE_USERNAME }}
           DEVICE_PASSWORD: ${{ secrets.DEVICE_PASSWORD }}
+          ANSIBLE_HOST_KEY_CHECKING: "False"
         run: ansible-playbook ansible/configure_devices.yaml -i ansible/hosts
 
       - name: Commit to the repo

@@ -1,2 +1,27 @@
 name: Network Automation
 
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ansible/**'
+      - '.github/worksflows/network-automation.yaml'
+  schedule:
+    - cron "* /10 * * * *" # every 10 minutes
+
+jobs:
+  configure-network:
+    runs-on:
+      - self-hosted
+      - network-lab-runner
+
+    steps:
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i ansible/configure_devices.yaml -i ansible/hosts
+
+      - name: Commit to the repo
+        run: |
+          git add ansible/backups
+          git commit -m 'Backing up every 10 minutes'
+          git push origin main

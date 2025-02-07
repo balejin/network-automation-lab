@@ -25,7 +25,7 @@ jobs:
         env:
           DEVICE_USERNAME: ${{ secrets.DEVICE_USERNAME }}
           DEVICE_PASSWORD: ${{ secrets.DEVICE_PASSWORD }}
-        run: ansible-playbook -i ansible/configure_devices.yaml -i ansible/hosts
+        run: ansible-playbook ansible/configure_devices.yaml -i ansible/hosts
 
       - name: Commit to the repo
         run: git add ansible/backups;git commit -m 'Backing up every 10 minutes';git push origin main

@@ -17,11 +17,14 @@ jobs:
       - network-lab-runner
 
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
       - name: Run Ansible Playbook
+        env:
+          DEVICE_USERNAME: ${{ secrets.DEVICE_USERNAME }}
+          DEVICE_PASSWORD: ${{ secrets.DEVICE_PASSWORD }}
         run: ansible-playbook -i ansible/configure_devices.yaml -i ansible/hosts
 
       - name: Commit to the repo
-        run: |
-          git add ansible/backups
-          git commit -m 'Backing up every 10 minutes'
-          git push origin main
+        run: git add ansible/backups;git commit -m 'Backing up every 10 minutes';git push origin main
